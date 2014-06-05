@@ -97,13 +97,13 @@ class ScoreManager: NSObject, NSURLSessionDelegate {
                 var gameArray = Game[]()
                 let data = NSData(contentsOfURL: url)
                 var jsonError: NSError? = nil
-                let jsonObject: AnyObject = NSJSONSerialization.JSONObjectWithData(data, options:nil, error: &jsonError)
+                let jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options:nil, error: &jsonError)
                 if let errorOccurred = error {
                     completionClosure(Game[](), error)
                     return
                 }
                 if jsonObject is NSDictionary {
-                    let receivedGamesArray: NSArray = jsonObject["scores"] as NSArray
+                    let receivedGamesArray: NSArray = jsonObject!["scores"] as NSArray
                     for gameDict: AnyObject in receivedGamesArray {
                         if gameDict as? NSDictionary {
                             if let game = generateGame(gameDict as NSDictionary) {
