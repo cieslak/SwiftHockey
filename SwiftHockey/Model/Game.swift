@@ -10,9 +10,9 @@ import Foundation
 
 class Game {
 
-    var league: League
-    var awayTeam: Team
-    var homeTeam: Team
+    let league: League
+    let awayTeam: Team
+    let homeTeam: Team
     var awayTeamScore = 0
     var homeTeamScore = 0
     var playing = false

@@ -10,9 +10,9 @@ import Foundation
 
 class Team {
     
-    var cityName: String
-    var teamName: String
-    var shortName: String
+    let cityName: String
+    let teamName: String
+    let shortName: String
     
     var fullName: String {
         get {
