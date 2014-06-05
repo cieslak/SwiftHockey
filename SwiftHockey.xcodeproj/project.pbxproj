@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B56F74E1940099400482E44 /* GameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B56F74D1940099400482E44 /* GameTableViewCell.swift */; };
 		2B7D37CA193EBA8B0031C874 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D37C9193EBA8B0031C874 /* AppDelegate.swift */; };
-		2B7D37CC193EBA8B0031C874 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D37CB193EBA8B0031C874 /* MasterViewController.swift */; };
-		2B7D37CE193EBA8B0031C874 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D37CD193EBA8B0031C874 /* DetailViewController.swift */; };
 		2B7D37D1193EBA8B0031C874 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B7D37CF193EBA8B0031C874 /* Main.storyboard */; };
 		2B7D37D3193EBA8B0031C874 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B7D37D2193EBA8B0031C874 /* Images.xcassets */; };
 		2B7D37DF193EBA8B0031C874 /* SwiftHockeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D37DE193EBA8B0031C874 /* SwiftHockeyTests.swift */; };
+		2B7D37EA193EBB470031C874 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D37E9193EBB470031C874 /* Game.swift */; };
+		2B7D37EC193EBFD00031C874 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D37EB193EBFD00031C874 /* Team.swift */; };
+		2B7D37EE193EC4EC0031C874 /* League.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D37ED193EC4EC0031C874 /* League.swift */; };
+		2B7D37F0193EC8EE0031C874 /* ScoresTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D37EF193EC8EE0031C874 /* ScoresTableViewController.swift */; };
+		2B7D37F2193EC9BF0031C874 /* ScoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D37F1193EC9BF0031C874 /* ScoreManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,16 +30,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2B56F74D1940099400482E44 /* GameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTableViewCell.swift; sourceTree = "<group>"; };
 		2B7D37C4193EBA8B0031C874 /* SwiftHockey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftHockey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B7D37C8193EBA8B0031C874 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2B7D37C9193EBA8B0031C874 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2B7D37CB193EBA8B0031C874 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		2B7D37CD193EBA8B0031C874 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		2B7D37D0193EBA8B0031C874 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2B7D37D2193EBA8B0031C874 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2B7D37D8193EBA8B0031C874 /* SwiftHockeyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftHockeyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B7D37DD193EBA8B0031C874 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2B7D37DE193EBA8B0031C874 /* SwiftHockeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftHockeyTests.swift; sourceTree = "<group>"; };
+		2B7D37E9193EBB470031C874 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		2B7D37EB193EBFD00031C874 /* Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
+		2B7D37ED193EC4EC0031C874 /* League.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = League.swift; sourceTree = "<group>"; };
+		2B7D37EF193EC8EE0031C874 /* ScoresTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoresTableViewController.swift; sourceTree = "<group>"; };
+		2B7D37F1193EC9BF0031C874 /* ScoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,10 +86,12 @@
 			isa = PBXGroup;
 			children = (
 				2B7D37C9193EBA8B0031C874 /* AppDelegate.swift */,
-				2B7D37CB193EBA8B0031C874 /* MasterViewController.swift */,
-				2B7D37CD193EBA8B0031C874 /* DetailViewController.swift */,
+				2B7D37EF193EC8EE0031C874 /* ScoresTableViewController.swift */,
+				2B56F74D1940099400482E44 /* GameTableViewCell.swift */,
+				2B7D37F1193EC9BF0031C874 /* ScoreManager.swift */,
 				2B7D37CF193EBA8B0031C874 /* Main.storyboard */,
 				2B7D37D2193EBA8B0031C874 /* Images.xcassets */,
+				2B7D37E8193EBB1D0031C874 /* Model */,
 				2B7D37C7193EBA8B0031C874 /* Supporting Files */,
 			);
 			path = SwiftHockey;
@@ -110,6 +120,16 @@
 				2B7D37DD193EBA8B0031C874 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2B7D37E8193EBB1D0031C874 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2B7D37ED193EC4EC0031C874 /* League.swift */,
+				2B7D37EB193EBFD00031C874 /* Team.swift */,
+				2B7D37E9193EBB470031C874 /* Game.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,9 +231,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B7D37CE193EBA8B0031C874 /* DetailViewController.swift in Sources */,
-				2B7D37CC193EBA8B0031C874 /* MasterViewController.swift in Sources */,
+				2B56F74E1940099400482E44 /* GameTableViewCell.swift in Sources */,
+				2B7D37F2193EC9BF0031C874 /* ScoreManager.swift in Sources */,
+				2B7D37EC193EBFD00031C874 /* Team.swift in Sources */,
 				2B7D37CA193EBA8B0031C874 /* AppDelegate.swift in Sources */,
+				2B7D37EE193EC4EC0031C874 /* League.swift in Sources */,
+				2B7D37EA193EBB470031C874 /* Game.swift in Sources */,
+				2B7D37F0193EC8EE0031C874 /* ScoresTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,6 +425,7 @@
 				2B7D37E4193EBA8B0031C874 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2B7D37E5193EBA8B0031C874 /* Build configuration list for PBXNativeTarget "SwiftHockeyTests" */ = {
 			isa = XCConfigurationList;
@@ -409,6 +434,7 @@
 				2B7D37E7193EBA8B0031C874 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
