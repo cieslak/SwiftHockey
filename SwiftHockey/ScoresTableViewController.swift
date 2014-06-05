@@ -12,19 +12,11 @@ class ScoresTableViewController: UITableViewController {
         
     override func viewDidLoad()  {
         super.viewDidLoad()
-        self.navigationItem.title = "Hockey Scores"
-        ScoreManager.sharedInstance.retrieveScores {
-            (games, error) -> () in
-            if let errorOccurred = error {
-                let alertController = UIAlertController(title: "Error Loading Scores", message: error!.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert);
-                let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil);
-                alertController.addAction(alertAction)
-                self.presentViewController(alertController, animated: true, completion:nil)
-            }
-            self.tableView.reloadData()
-        }
-        
-        
+        navigationItem.title = "Hockey Scores"
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl.beginRefreshing()
+        refresh()
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
@@ -51,6 +43,20 @@ class ScoresTableViewController: UITableViewController {
         }
         
         return cell
+    }
+    
+    func refresh() {
+        ScoreManager.sharedInstance.retrieveScores {
+            (games, error) -> () in
+            if let errorOccurred = error {
+                let alertController = UIAlertController(title: "Error Loading Scores", message: error!.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert);
+                let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil);
+                alertController.addAction(alertAction)
+                self.presentViewController(alertController, animated: true, completion:nil)
+            }
+            self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
+        }
     }
     
 }
