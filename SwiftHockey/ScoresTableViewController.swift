@@ -54,7 +54,7 @@ class ScoresTableViewController: UITableViewController {
                 alertController.addAction(alertAction)
                 self.presentViewController(alertController, animated: true, completion:nil)
             }
-            self.tableView.reloadData()
+            dispatch_async(dispatch_get_main_queue(), {self.tableView.reloadData()})
             self.refreshControl.endRefreshing()
             if ScoreManager.sharedInstance.games.count == 0 {
                 let alertController = UIAlertController(title: "No Games Scheduled", message: "No hockey today. 😭", preferredStyle: UIAlertControllerStyle.Alert);
