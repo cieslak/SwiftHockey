@@ -14,4 +14,5 @@ enum League: String {
     case OHL = "OHL"
     case WHL = "WHL"
     case QMJHL = "QMJHL"
+    case All = "All"
 }

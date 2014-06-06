@@ -19,7 +19,7 @@
             </objects>
             <point key="canvasLocation" x="-1" y="64"/>
         </scene>
-        <!--Scores Table View Controller-->
+        <!--Scores Table View Controller - Hockey Scores-->
         <scene sceneID="6oi-pq-UTS">
             <objects>
                 <tableViewController id="RsZ-aa-hJL" customClass="ScoresTableViewController" customModule="SwiftHockey" customModuleProvider="target" sceneMemberID="viewController">
@@ -173,7 +173,20 @@
                             <outlet property="delegate" destination="RsZ-aa-hJL" id="QLh-mi-emT"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="lQ2-Co-zUo"/>
+                    <navigationItem key="navigationItem" title="Hockey Scores" id="lQ2-Co-zUo">
+                        <barButtonItem key="leftBarButtonItem" title="Today" id="Pxl-n6-eVj">
+                            <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="dateButtonTouched:" destination="RsZ-aa-hJL" id="jBa-n6-ChX"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="All" id="LYS-p3-D5P">
+                            <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="filterButtonPressed:" destination="RsZ-aa-hJL" id="1eJ-TT-2NU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eqL-NL-X9r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
