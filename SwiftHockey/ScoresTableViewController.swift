@@ -11,11 +11,12 @@ import UIKit
 class ScoresTableViewController: UITableViewController {
     
     let dateFormatter = NSDateFormatter()
-    var leagueFilter = League.All
+    var leagueFilter = League.NHL
     var filteredGames = Game[]()
  
     override func viewDidLoad()  {
         super.viewDidLoad()
+        navigationItem.rightBarButtonItem.title = leagueFilter.toRaw()
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
         refreshControl.beginRefreshing()
