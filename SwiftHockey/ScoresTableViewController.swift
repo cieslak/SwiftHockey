@@ -62,11 +62,12 @@ class ScoresTableViewController: UITableViewController {
             (games, error) in
             
             if let errorOccurred = error {
-                let alertController = UIAlertController(title: "Error Loading Scores", message: error!.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert);
-                let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {handler in enableInterface(true)})
+                let alertController = UIAlertController(title: "Error Loading Scores", message: error!.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
+                let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler:nil)
                 alertController.addAction(alertAction)
-                self.presentViewController(alertController, animated: true) {
-                    dispatch_async(dispatch_get_main_queue()) {enableInterface(true)}
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                    enableInterface(true)
                 }
             }
             
@@ -82,13 +83,14 @@ class ScoresTableViewController: UITableViewController {
                 enableInterface(true)
                 self.refreshControl.endRefreshing()
             }
-            
-            if ScoreManager.sharedInstance.games.count == 0 {
-                let alertController = UIAlertController(title: "No Games Scheduled", message: "No hockey today. 😭", preferredStyle: UIAlertControllerStyle.Alert);
-                let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {handler in enableInterface(true)});
+
+            if self.filteredGames.count == 0 {
+                let alertController = UIAlertController(title: "No Games Scheduled", message: "No hockey today. 😭", preferredStyle: UIAlertControllerStyle.Alert)
+                let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler:nil)
                 alertController.addAction(alertAction)
-                self.presentViewController(alertController, animated: true) {
-                    dispatch_async(dispatch_get_main_queue()) {enableInterface(true)}
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                    enableInterface(true)
                 }
             }
         }
