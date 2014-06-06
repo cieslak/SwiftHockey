@@ -23,16 +23,15 @@ class ScoreManager: NSObject, NSURLSessionDelegate {
         }
     }
     
-    let apiBaseURL = NSURL(string:"https://api.hockeystreams.com/Scores?key=7344b5c9c89372d26b068022c9f28175&date=03/14/2014")
-
-    //let apiBaseURL = NSURL(string:"https://api.hockeystreams.com/Scores?key=7344b5c9c89372d26b068022c9f28175")
+    let apiBaseURL = "https://api.hockeystreams.com/Scores?key=7344b5c9c89372d26b068022c9f28175&date="
 
     let urlSession = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: nil, delegateQueue: nil)
     
     var games = Game[]()
     
-    func retrieveScores(completionClosure: (Game[], NSError?) -> ()) {
-        let request = NSMutableURLRequest(URL: apiBaseURL)
+    func retrieveScoresForDateString(dateString: String, completionClosure: (Game[], NSError?) -> ()) {
+        let url = NSURL(string: "\(apiBaseURL)\(dateString)")
+        let request = NSMutableURLRequest(URL: url)
         let task = urlSession.downloadTaskWithRequest(request, completionHandler: {
             (url, response, error) in
             

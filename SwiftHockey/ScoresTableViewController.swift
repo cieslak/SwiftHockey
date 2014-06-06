@@ -14,10 +14,12 @@ class ScoresTableViewController: UITableViewController {
     var leagueFilter = League.NHL
     var currentDate = NSDate().dateByRemovingTime()
     var filteredGames = Game[]()
+    var isShowingDatePicker = false
  
     override func viewDidLoad()  {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem.title = leagueFilter.toRaw()
+        dateFormatter.dateFormat = "MM/dd/yy"
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
         refreshControl.beginRefreshing()
@@ -60,7 +62,9 @@ class ScoresTableViewController: UITableViewController {
         
         enableInterface(false)
         
-        ScoreManager.sharedInstance.retrieveScores {
+        let currentDateString = dateFormatter.stringFromDate(currentDate)
+        
+        ScoreManager.sharedInstance.retrieveScoresForDateString(currentDateString) {
             (games, error) in
             
             if let errorOccurred = error {
@@ -101,7 +105,11 @@ class ScoresTableViewController: UITableViewController {
     }
     
     @IBAction func dateButtonTouched(sender : AnyObject) {
-        
+        if isShowingDatePicker {
+            
+        } else {
+            
+        }
     }
     
     @IBAction func filterButtonPressed(sender : AnyObject) {
