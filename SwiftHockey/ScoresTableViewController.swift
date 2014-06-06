@@ -12,6 +12,7 @@ class ScoresTableViewController: UITableViewController {
     
     let dateFormatter = NSDateFormatter()
     var leagueFilter = League.NHL
+    var currentDate = NSDate().dateByRemovingTime()
     var filteredGames = Game[]()
  
     override func viewDidLoad()  {
@@ -52,6 +53,7 @@ class ScoresTableViewController: UITableViewController {
     func refresh() {
         
         func enableInterface(enable: Bool) {
+            navigationItem.leftBarButtonItem.enabled = enable
             navigationItem.rightBarButtonItem.enabled = enable
             refreshControl.enabled = enable
         }
@@ -75,7 +77,9 @@ class ScoresTableViewController: UITableViewController {
             case .All:
                 self.filteredGames = ScoreManager.sharedInstance.games
             default:
-                self.filteredGames = ScoreManager.sharedInstance.games.filter({game in game.league == self.leagueFilter})
+                self.filteredGames = ScoreManager.sharedInstance.games.filter {
+                    game in game.league == self.leagueFilter
+                }
             }
                 
             dispatch_async(dispatch_get_main_queue()) {
@@ -97,7 +101,7 @@ class ScoresTableViewController: UITableViewController {
     }
     
     @IBAction func dateButtonTouched(sender : AnyObject) {
-    
+        
     }
     
     @IBAction func filterButtonPressed(sender : AnyObject) {
@@ -117,6 +121,15 @@ class ScoresTableViewController: UITableViewController {
         self.presentViewController(alertController, animated: true, completion: nil)
     }
     
+}
+
+extension NSDate {
+    func dateByRemovingTime() -> NSDate {
+        let flags: NSCalendarUnit = .DayCalendarUnit | .MonthCalendarUnit | .YearCalendarUnit
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components(flags, fromDate: self)
+        return calendar.dateFromComponents(components)
+    }
 }
 
 
