@@ -17,6 +17,7 @@ class ScoresTableViewController: UITableViewController {
     
     var datePicker = UIDatePicker()
     var isShowingDatePicker = false
+    var isRefreshing = false
     
     override func viewDidLoad()  {
         super.viewDidLoad()
@@ -25,6 +26,10 @@ class ScoresTableViewController: UITableViewController {
         datePicker.datePickerMode = .Date
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
+    }
+    
+    override func viewDidAppear(animated: Bool)  {
+        super.viewDidAppear(animated)
         refresh()
     }
     
@@ -44,11 +49,28 @@ class ScoresTableViewController: UITableViewController {
     
     func refresh() {
         
+        if isRefreshing {return}
+        
+        isRefreshing = true
+        
         func enableInterface(enable: Bool) {
             navigationItem.leftBarButtonItem.enabled = enable
             navigationItem.rightBarButtonItem.enabled = enable
             refreshControl.enabled = enable
         }
+        
+        func showAlertWithTitle(title: String, #message: String) {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler:nil)
+            alertController.addAction(alertAction)
+            dispatch_async(dispatch_get_main_queue()) {
+                self.presentViewController(alertController, animated: true, completion: nil)
+                enableInterface(true)
+            }
+        }
+        
+        self.filteredGames = Game[]()
+        self.tableView.reloadData()
         
         enableInterface(false)
         
@@ -60,13 +82,8 @@ class ScoresTableViewController: UITableViewController {
             (games, error) in
             
             if let errorOccurred = error {
-                let alertController = UIAlertController(title: "Error Loading Scores", message: error!.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
-                let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler:nil)
-                alertController.addAction(alertAction)
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.presentViewController(alertController, animated: true, completion: nil)
-                    enableInterface(true)
-                }
+                showAlertWithTitle("Error Loading Scores", message: error!.localizedDescription)
+                return
             }
             
             switch self.leagueFilter {
@@ -86,14 +103,9 @@ class ScoresTableViewController: UITableViewController {
             
             if self.filteredGames.count == 0 {
                 var dateString = self.dateFormatter.stringFromDate(self.currentDate)
-                let alertController = UIAlertController(title: "No Games Scheduled", message: "No hockey for \(dateString). 😭", preferredStyle: UIAlertControllerStyle.Alert)
-                let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler:nil)
-                alertController.addAction(alertAction)
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.presentViewController(alertController, animated: true, completion: nil)
-                    enableInterface(true)
-                }
+                showAlertWithTitle("No Games Scheduled", message: "No hockey for \(dateString). 😭")
             }
+            self.isRefreshing = false
         }
     }
     
@@ -139,11 +151,9 @@ class ScoresTableViewController: UITableViewController {
         
         for string in ["All", "NHL", "AHL", "OHL", "WHL", "QMJHL"] {
             let action = UIAlertAction(title: string, style: UIAlertActionStyle.Default) {
-                (action) in
+                action in
                 self.leagueFilter = League.fromRaw(action.title)!
                 self.navigationItem.rightBarButtonItem.title = self.leagueFilter.toRaw()
-                self.filteredGames = Game[]()
-                self.tableView.reloadData()
                 self.refresh()
             }
             alertController.addAction(action)
