@@ -21,7 +21,7 @@ class ScoresTableViewController: UITableViewController {
     override func viewDidLoad()  {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem.title = leagueFilter.toRaw()
-        dateFormatter.dateFormat = "MM/dd/yy"
+        dateFormatter.dateFormat = "MM/dd/yyyy"
         datePicker.datePickerMode = .Date
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
