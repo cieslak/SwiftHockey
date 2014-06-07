@@ -17,12 +17,6 @@ enum ScoreRequestResponse {
 
 class ScoreManager: NSObject, NSURLSessionDelegate {
     
-    class var sharedInstance: ScoreManager {
-        get {
-            return sharedScoreManager
-        }
-    }
-    
     let apiBaseURL = "https://api.hockeystreams.com/Scores?key=7344b5c9c89372d26b068022c9f28175&date="
 
     let urlSession = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: nil, delegateQueue: nil)
