@@ -4,7 +4,7 @@ By [Chris Cieslak](http://twitter.com/cieslak)
 
 ##Description
 
-An iOS app written in Swift that check hockey scores. Inspired by [Jason Leyrer’s](http://twitter.com/sigsegfalt) excellent [HockeyScores](https://github.com/jleyrer/HockeyScores).
+An iOS app written in Swift that check hockey scores. Inspired by [Jason Leyrer’s](http://twitter.com/sigsegfalt) excellent [HockeyScores](https://github.com/jleyrer/HockeyScores). Powered by [HockeyStreams.com](https://www.hockeystreams.com/api#scoresapi)
 
 ##Notes
 
