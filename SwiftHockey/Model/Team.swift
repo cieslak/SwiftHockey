@@ -20,10 +20,16 @@ class Team {
         }
     }
     
-    init(var cityName: String, teamName: String, shortName: String) {
+    init(var cityName: String, teamName: String, var shortName: String) {
+        
         if (cityName == "NY Rangers" || cityName == "NY Islanders") {
             cityName = "New York"
         }
+        
+        if (shortName == "" && countElements(cityName) >= 3) {
+            shortName = cityName.substringToIndex(3).uppercaseString
+        }
+        
         self.cityName = cityName
         self.teamName = teamName
         self.shortName = shortName
