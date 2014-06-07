@@ -14,15 +14,17 @@ class ScoresTableViewController: UITableViewController {
     var leagueFilter = League.NHL
     var currentDate = NSDate().dateByRemovingTime()
     var filteredGames = Game[]()
+    
+    var datePicker = UIDatePicker()
     var isShowingDatePicker = false
  
     override func viewDidLoad()  {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem.title = leagueFilter.toRaw()
         dateFormatter.dateFormat = "MM/dd/yy"
+        datePicker.datePickerMode = .Date
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
-        refreshControl.beginRefreshing()
         refresh()
     }
     
@@ -61,7 +63,9 @@ class ScoresTableViewController: UITableViewController {
         }
         
         enableInterface(false)
-        
+
+        refreshControl.beginRefreshing()
+
         let currentDateString = dateFormatter.stringFromDate(currentDate)
         
         ScoreManager.sharedInstance.retrieveScoresForDateString(currentDateString) {
@@ -82,7 +86,7 @@ class ScoresTableViewController: UITableViewController {
                 self.filteredGames = ScoreManager.sharedInstance.games
             default:
                 self.filteredGames = ScoreManager.sharedInstance.games.filter {
-                    game in game.league == self.leagueFilter
+                    $0.league == self.leagueFilter
                 }
             }
                 
@@ -93,7 +97,8 @@ class ScoresTableViewController: UITableViewController {
             }
 
             if self.filteredGames.count == 0 {
-                let alertController = UIAlertController(title: "No Games Scheduled", message: "No hockey today. 😭", preferredStyle: UIAlertControllerStyle.Alert)
+                var dateString = self.dateFormatter.stringFromDate(self.currentDate)
+                let alertController = UIAlertController(title: "No Games Scheduled", message: "No hockey for \(dateString). 😭", preferredStyle: UIAlertControllerStyle.Alert)
                 let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler:nil)
                 alertController.addAction(alertAction)
                 dispatch_async(dispatch_get_main_queue()) {
@@ -107,9 +112,26 @@ class ScoresTableViewController: UITableViewController {
     @IBAction func dateButtonTouched(sender : AnyObject) {
         if isShowingDatePicker {
             
+            currentDate = datePicker.date.dateByRemovingTime()
+            tableView.tableHeaderView = nil
+            var dateString = dateFormatter.stringFromDate(currentDate)
+            if NSDate().dateByRemovingTime() == currentDate {
+                dateString = "Today"
+            }
+            
+            navigationItem.leftBarButtonItem.title = dateString
+            refresh()
+            
         } else {
             
+            
+            
+            tableView.tableHeaderView = datePicker
+            navigationItem.leftBarButtonItem.title = "Done"
+
         }
+        
+        isShowingDatePicker = !isShowingDatePicker
     }
     
     @IBAction func filterButtonPressed(sender : AnyObject) {
