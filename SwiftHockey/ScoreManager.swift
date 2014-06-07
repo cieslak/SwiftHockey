@@ -10,6 +10,11 @@ import UIKit
 
 let sharedScoreManager = ScoreManager()
 
+enum ScoreRequestResponse {
+    case Response (Game[])
+    case Error (NSError)
+}
+
 class ScoreManager: NSObject, NSURLSessionDelegate {
     
     class var sharedInstance: ScoreManager {
@@ -24,14 +29,14 @@ class ScoreManager: NSObject, NSURLSessionDelegate {
     
     var games = Game[]()
     
-    func retrieveScoresForDateString(dateString: String, completionClosure: (Game[], NSError?) -> ()) {
+    func retrieveScoresForDateString(dateString: String, completionClosure: (ScoreRequestResponse) -> ()) {
         let url = NSURL(string: "\(apiBaseURL)\(dateString)")
         let request = NSMutableURLRequest(URL: url)
         let task = urlSession.downloadTaskWithRequest(request, completionHandler: {
             (url, response, error) in
             
             if let errorOccurred = error {
-                completionClosure(Game[](), error)
+                completionClosure(ScoreRequestResponse.Error(error))
                 return
             } else {
                 var gameArray = Game[]()
@@ -39,7 +44,7 @@ class ScoreManager: NSObject, NSURLSessionDelegate {
                 var jsonError: NSError? = nil
                 let jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options:nil, error: &jsonError)
                 if let errorOccurred = error {
-                    completionClosure(Game[](), error)
+                    completionClosure(ScoreRequestResponse.Error(error))
                     return
                 }
                 if jsonObject is NSDictionary {
@@ -53,7 +58,7 @@ class ScoreManager: NSObject, NSURLSessionDelegate {
                     }
                 }
                 self.games = gameArray
-                completionClosure(gameArray, nil)
+                completionClosure(ScoreRequestResponse.Response(self.games))
             }
             })
         task.resume()

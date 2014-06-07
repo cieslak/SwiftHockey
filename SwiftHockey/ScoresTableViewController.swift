@@ -80,33 +80,34 @@ class ScoresTableViewController: UITableViewController {
         let currentDateString = dateFormatter.stringFromDate(currentDate)
         
         sharedScoreManager.retrieveScoresForDateString(currentDateString) {
-            (games, error) in
+            (response) in
             
-            if let errorOccurred = error {
-                showAlertWithTitle("Error Loading Scores", message: error!.localizedDescription)
+            switch response {
+            case .Error(let error):
+                showAlertWithTitle("Error Loading Scores", message: error.localizedDescription)
                 return
-            }
-            
-            switch self.leagueFilter {
-            case .All:
-                self.filteredGames = ScoreManager.sharedInstance.games
-            default:
-                self.filteredGames = ScoreManager.sharedInstance.games.filter {
-                    $0.league == self.leagueFilter
+            case .Response(let games):
+                switch self.leagueFilter {
+                case .All:
+                    self.filteredGames = games
+                default:
+                    self.filteredGames = games.filter {
+                        $0.league == self.leagueFilter
+                    }
                 }
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.tableView.reloadData()
+                    enableInterface(true)
+                    self.refreshControl.endRefreshing()
+                }
+                
+                if self.filteredGames.count == 0 {
+                    var dateString = self.dateFormatter.stringFromDate(self.currentDate)
+                    showAlertWithTitle("No Games Scheduled", message: "No hockey for \(dateString). 😭")
+                }
+                self.isRefreshing = false
             }
-            
-            dispatch_async(dispatch_get_main_queue()) {
-                self.tableView.reloadData()
-                enableInterface(true)
-                self.refreshControl.endRefreshing()
-            }
-            
-            if self.filteredGames.count == 0 {
-                var dateString = self.dateFormatter.stringFromDate(self.currentDate)
-                showAlertWithTitle("No Games Scheduled", message: "No hockey for \(dateString). 😭")
-            }
-            self.isRefreshing = false
         }
     }
     
