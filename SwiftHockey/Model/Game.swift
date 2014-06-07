@@ -51,13 +51,9 @@ class Game {
         
         let game = Game(league: league!, awayTeam: awayTeam, homeTeam: homeTeam)
         
-        let isPlaying: Int? = jsonDict["isPlaying"] as? Int
-        
-        if isPlaying == nil {
-            return nil
+        if let isPlaying: Int? = jsonDict["isPlaying"] as? Int {
+            game.playing = (isPlaying > 0) ? true : false
         }
-        
-        game.playing = (isPlaying > 0) ? true : false
         
         if let awayTeamScore = jsonDict["awayScore"] as? String {
             if let scoreIntValue = awayTeamScore.toInt() {

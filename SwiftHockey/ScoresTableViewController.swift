@@ -38,19 +38,7 @@ class ScoresTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
         let cell: GameTableViewCell = tableView.dequeueReusableCellWithIdentifier("scoreCell") as GameTableViewCell
-        let game = filteredGames[indexPath.row]
-        cell.awayShortNameLabel.text = game.awayTeam.shortName
-        cell.homeShortNameLabel.text = game.homeTeam.shortName
-        cell.awayScoreLabel.text = "\(game.awayTeamScore)"
-        cell.homeScoreLabel.text = "\(game.homeTeamScore)"
-        cell.awayTeamCityLabel.text = game.awayTeam.cityName
-        cell.homeTeamCityLabel.text = game.homeTeam.cityName
-        cell.awayTeamNameLabel.text = game.awayTeam.teamName
-        cell.homeTeamNameLabel.text = game.homeTeam.teamName
-        if let periodExists = game.period {
-            cell.periodLabel.text = periodExists
-        }
-        
+        cell.game = filteredGames[indexPath.row]
         return cell
     }
     
