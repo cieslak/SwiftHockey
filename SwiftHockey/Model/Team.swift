@@ -29,7 +29,7 @@ class Team {
         if (shortName == "" && countElements(cityName) >= 3) {
             shortName = cityName.substringToIndex(3).uppercaseString
         }
-        
+                
         self.cityName = cityName
         self.teamName = teamName
         self.shortName = shortName

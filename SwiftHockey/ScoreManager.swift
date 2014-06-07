@@ -8,18 +8,13 @@
 
 import UIKit
 
+let sharedScoreManager = ScoreManager()
+
 class ScoreManager: NSObject, NSURLSessionDelegate {
     
     class var sharedInstance: ScoreManager {
         get {
-            struct StaticInstance {
-                static var onceToken: dispatch_once_t = 0
-                static var sharedInstance: ScoreManager? = nil
-            }
-            dispatch_once(&StaticInstance.onceToken, {
-                StaticInstance.sharedInstance = ScoreManager()
-                })
-            return StaticInstance.sharedInstance!
+            return sharedScoreManager
         }
     }
     

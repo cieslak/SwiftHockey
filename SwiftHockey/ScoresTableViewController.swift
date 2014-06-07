@@ -68,7 +68,7 @@ class ScoresTableViewController: UITableViewController {
         
         let currentDateString = dateFormatter.stringFromDate(currentDate)
         
-        ScoreManager.sharedInstance.retrieveScoresForDateString(currentDateString) {
+        sharedScoreManager.retrieveScoresForDateString(currentDateString) {
             (games, error) in
             
             if let errorOccurred = error {
