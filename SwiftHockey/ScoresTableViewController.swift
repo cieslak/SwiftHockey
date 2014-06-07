@@ -17,7 +17,7 @@ class ScoresTableViewController: UITableViewController {
     
     var datePicker = UIDatePicker()
     var isShowingDatePicker = false
- 
+    
     override func viewDidLoad()  {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem.title = leagueFilter.toRaw()
@@ -63,9 +63,9 @@ class ScoresTableViewController: UITableViewController {
         }
         
         enableInterface(false)
-
+        
         refreshControl.beginRefreshing()
-
+        
         let currentDateString = dateFormatter.stringFromDate(currentDate)
         
         ScoreManager.sharedInstance.retrieveScoresForDateString(currentDateString) {
@@ -89,13 +89,13 @@ class ScoresTableViewController: UITableViewController {
                     $0.league == self.leagueFilter
                 }
             }
-                
+            
             dispatch_async(dispatch_get_main_queue()) {
                 self.tableView.reloadData()
                 enableInterface(true)
                 self.refreshControl.endRefreshing()
             }
-
+            
             if self.filteredGames.count == 0 {
                 var dateString = self.dateFormatter.stringFromDate(self.currentDate)
                 let alertController = UIAlertController(title: "No Games Scheduled", message: "No hockey for \(dateString). 😭", preferredStyle: UIAlertControllerStyle.Alert)
@@ -112,23 +112,35 @@ class ScoresTableViewController: UITableViewController {
     @IBAction func dateButtonTouched(sender : AnyObject) {
         if isShowingDatePicker {
             
-            currentDate = datePicker.date.dateByRemovingTime()
-            tableView.tableHeaderView = nil
-            var dateString = dateFormatter.stringFromDate(currentDate)
+            UIView.animateWithDuration(0.2, animations: {
+                self.datePicker.alpha = 0.0
+                }, completion: {
+                    finished in
+                    self.tableView.tableHeaderView = nil
+                })
+            
+            let newDate = datePicker.date.dateByRemovingTime()
+            let isSameDate = newDate == currentDate
+            currentDate = newDate
+            if !isSameDate {refresh()}
+            
+            var dateString = dateFormatter.stringFromDate(newDate)
             if NSDate().dateByRemovingTime() == currentDate {
                 dateString = "Today"
             }
-            
             navigationItem.leftBarButtonItem.title = dateString
-            refresh()
             
         } else {
             
+            datePicker.alpha = 0.0
             
+            UIView.animateWithDuration(0.2) {
+                self.datePicker.alpha = 1.0
+                self.tableView.tableHeaderView = self.datePicker
+            }
             
-            tableView.tableHeaderView = datePicker
             navigationItem.leftBarButtonItem.title = "Done"
-
+            
         }
         
         isShowingDatePicker = !isShowingDatePicker
@@ -140,12 +152,12 @@ class ScoresTableViewController: UITableViewController {
         for string in ["All", "NHL", "AHL", "OHL", "WHL", "QMJHL"] {
             let action = UIAlertAction(title: string, style: UIAlertActionStyle.Default) {
                 (action) in
-                    self.leagueFilter = League.fromRaw(action.title)!
-                    self.navigationItem.rightBarButtonItem.title = self.leagueFilter.toRaw()
-                    self.filteredGames = Game[]()
-                    self.tableView.reloadData()
-                    self.refresh()
-                }
+                self.leagueFilter = League.fromRaw(action.title)!
+                self.navigationItem.rightBarButtonItem.title = self.leagueFilter.toRaw()
+                self.filteredGames = Game[]()
+                self.tableView.reloadData()
+                self.refresh()
+            }
             alertController.addAction(action)
         }
         self.presentViewController(alertController, animated: true, completion: nil)
