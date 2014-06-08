@@ -24,7 +24,8 @@ class ScoreManager: NSObject, NSURLSessionDelegate {
     
     var games = Game[]()
     
-    func retrieveScoresForDateString(dateString: String, completion: (Result<Game[],NSError>) -> ()) {
+    func retrieveScoresForDateString(dateString: String, league: League, completion: (Result<Game[],NSError>) -> ()) {
+
         let url = NSURL(string: "\(apiBaseURL)\(dateString)")
         let request = NSMutableURLRequest(URL: url)
         let task = urlSession.downloadTaskWithRequest(request) {
@@ -54,7 +55,15 @@ class ScoreManager: NSObject, NSURLSessionDelegate {
                         }
                     }
                 }
-                self.games = gameArray
+                
+                switch league {
+                case .All:
+                    self.games = gameArray
+                default:
+                    self.games = gameArray.filter {
+                        $0.league == league
+                    }
+                }
                 completion(Result.Response({self.games}))
             }
         }

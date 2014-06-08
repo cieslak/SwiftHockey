@@ -13,11 +13,10 @@ class ScoresTableViewController: UITableViewController {
     let dateFormatter = NSDateFormatter()
     var leagueFilter = League.NHL
     var currentDate = NSDate().dateByRemovingTime()
-    var filteredGames = Game[]()
-    
     var datePicker = UIDatePicker()
     var isShowingDatePicker = false
     var isRefreshing = false
+    var games = Game[]()
     
     override func viewDidLoad()  {
         super.viewDidLoad()
@@ -56,7 +55,7 @@ class ScoresTableViewController: UITableViewController {
             }
         }
         
-        self.filteredGames = Game[]()
+        self.games = Game[]()
         self.tableView.reloadData()
         
         enableInterface(false)
@@ -65,7 +64,7 @@ class ScoresTableViewController: UITableViewController {
         
         let currentDateString = dateFormatter.stringFromDate(currentDate)
         
-        sharedScoreManager.retrieveScoresForDateString(currentDateString) {
+        sharedScoreManager.retrieveScoresForDateString(currentDateString, league:leagueFilter) {
             response in
             
             switch response {
@@ -74,14 +73,8 @@ class ScoresTableViewController: UITableViewController {
                 self.isRefreshing = false
                 return
             case .Response(let games):
-                switch self.leagueFilter {
-                case .All:
-                    self.filteredGames = games()
-                default:
-                    self.filteredGames = games().filter {
-                        $0.league == self.leagueFilter
-                    }
-                }
+                
+                self.games = games()
                 
                 dispatch_async(dispatch_get_main_queue()) {
                     self.tableView.reloadData()
@@ -89,7 +82,7 @@ class ScoresTableViewController: UITableViewController {
                     self.refreshControl.endRefreshing()
                 }
                 
-                if self.filteredGames.count == 0 {
+                if self.games.count == 0 {
                     var dateString = self.dateFormatter.stringFromDate(self.currentDate)
                     showAlertWithTitle("No Games Scheduled", message: "No hockey for \(dateString). 😭")
                 }
@@ -159,12 +152,12 @@ extension ScoresTableViewController: UITableViewDataSource {
     }
     
     override func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
-        return filteredGames.count
+        return games.count
     }
     
     override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
         let cell: GameTableViewCell = tableView.dequeueReusableCellWithIdentifier("scoreCell") as GameTableViewCell
-        cell.game = filteredGames[indexPath.row]
+        cell.game = games[indexPath.row]
         return cell
     }
     
