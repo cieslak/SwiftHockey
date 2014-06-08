@@ -34,20 +34,6 @@ class ScoresTableViewController: UITableViewController {
         refresh()
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
-        return 1
-    }
-    
-    override func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
-        return filteredGames.count
-    }
-    
-    override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let cell: GameTableViewCell = tableView.dequeueReusableCellWithIdentifier("scoreCell") as GameTableViewCell
-        cell.game = filteredGames[indexPath.row]
-        return cell
-    }
-    
     func refresh() {
         
         if isRefreshing {return}
@@ -80,11 +66,12 @@ class ScoresTableViewController: UITableViewController {
         let currentDateString = dateFormatter.stringFromDate(currentDate)
         
         sharedScoreManager.retrieveScoresForDateString(currentDateString) {
-            (response) in
+            response in
             
             switch response {
             case .Error(let error):
                 showAlertWithTitle("Error Loading Scores", message: error.localizedDescription)
+                self.isRefreshing = false
                 return
             case .Response(let games):
                 switch self.leagueFilter {
@@ -155,12 +142,30 @@ class ScoresTableViewController: UITableViewController {
             let action = UIAlertAction(title: string, style: UIAlertActionStyle.Default) {
                 action in
                 self.leagueFilter = League.fromRaw(action.title)!
-                self.navigationItem.rightBarButtonItem.title = self.leagueFilter.toRaw()
+                self.navigationItem.rightBarButtonItem.title = string 
                 self.refresh()
             }
             alertController.addAction(action)
         }
         self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+}
+
+extension ScoresTableViewController: UITableViewDataSource {
+    
+    override func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
+        return 1
+    }
+    
+    override func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
+        return filteredGames.count
+    }
+    
+    override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+        let cell: GameTableViewCell = tableView.dequeueReusableCellWithIdentifier("scoreCell") as GameTableViewCell
+        cell.game = filteredGames[indexPath.row]
+        return cell
     }
     
 }

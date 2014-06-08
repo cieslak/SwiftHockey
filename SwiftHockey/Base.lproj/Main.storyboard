@@ -34,8 +34,8 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="39E-pT-5Id" id="h6p-Og-sRD">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="CHI" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bv3-Dc-klD">
-                                            <rect key="frame" x="20" y="0.0" width="220" height="75"/>
+                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CHI" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bv3-Dc-klD">
+                                            <rect key="frame" x="20" y="0.0" width="220" height="76"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="220" id="pcs-SM-Hhw"/>
                                             </constraints>
@@ -43,8 +43,8 @@
                                             <color key="textColor" red="0.93692680027173914" green="0.93692680027173914" blue="0.93692680027173914" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="MTL" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o5P-5t-obS">
-                                            <rect key="frame" x="242" y="0.0" width="218" height="75"/>
+                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MTL" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o5P-5t-obS">
+                                            <rect key="frame" x="240" y="0.0" width="220" height="76"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="220" id="kRR-Vv-Pbp"/>
                                             </constraints>
@@ -52,8 +52,8 @@
                                             <color key="textColor" red="0.93692680029999997" green="0.93692680029999997" blue="0.93692680029999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="10" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yek-cy-GPq">
-                                            <rect key="frame" x="5" y="8.5" width="63" height="53.5"/>
+                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yek-cy-GPq">
+                                            <rect key="frame" x="5" y="9" width="63" height="52.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="63" id="dhv-2j-aey"/>
                                             </constraints>
@@ -61,8 +61,8 @@
                                             <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rAw-7N-u1v">
-                                            <rect key="frame" x="412" y="10.5" width="63" height="53.5"/>
+                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rAw-7N-u1v">
+                                            <rect key="frame" x="412" y="11" width="63" height="52.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="63" id="9O3-zu-tlh"/>
                                             </constraints>
@@ -70,8 +70,8 @@
                                             <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="City" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWV-J8-Kmj">
-                                            <rect key="frame" x="50" y="15.5" width="184" height="21"/>
+                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWV-J8-Kmj">
+                                            <rect key="frame" x="50" y="16" width="26" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="fts-zh-SMV"/>
                                             </constraints>
@@ -79,8 +79,8 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Team" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V5A-nm-euo">
-                                            <rect key="frame" x="50" y="38" width="184" height="21"/>
+                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Team" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V5A-nm-euo">
+                                            <rect key="frame" x="50" y="39" width="35" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="7RS-SB-Kxm"/>
                                             </constraints>
@@ -88,8 +88,8 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="City" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ude-xK-OBF">
-                                            <rect key="frame" x="248" y="15" width="184" height="21"/>
+                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ude-xK-OBF">
+                                            <rect key="frame" x="404" y="15.5" width="26" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="Mg2-el-8Ri"/>
                                             </constraints>
@@ -97,8 +97,8 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Team" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ukv-1Z-rO6">
-                                            <rect key="frame" x="246" y="37" width="184" height="21"/>
+                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Team" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ukv-1Z-rO6">
+                                            <rect key="frame" x="395" y="38" width="35" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="iB1-NG-7VS"/>
                                             </constraints>
@@ -107,7 +107,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Period" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="199-bh-tYv">
-                                            <rect key="frame" x="172" y="52" width="137" height="21"/>
+                                            <rect key="frame" x="172" y="51.5" width="137" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="137" id="pdI-eL-xKE"/>
                                                 <constraint firstAttribute="height" constant="21" id="py1-Bc-dMq"/>
