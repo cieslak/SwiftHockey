@@ -70,15 +70,15 @@ class ScoresTableViewController: UITableViewController {
             
             switch response {
             case .Error(let error):
-                showAlertWithTitle("Error Loading Scores", message: error.localizedDescription)
+                showAlertWithTitle("Error Loading Scores", message: error().localizedDescription)
                 self.isRefreshing = false
                 return
             case .Response(let games):
                 switch self.leagueFilter {
                 case .All:
-                    self.filteredGames = games
+                    self.filteredGames = games()
                 default:
-                    self.filteredGames = games.filter {
+                    self.filteredGames = games().filter {
                         $0.league == self.leagueFilter
                     }
                 }
