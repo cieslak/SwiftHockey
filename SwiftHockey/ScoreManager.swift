@@ -10,9 +10,9 @@ import UIKit
 
 let sharedScoreManager = ScoreManager()
 
-enum Result<X, T> {
-    case Response(() -> X)
-    case Error(() -> T)
+enum Result<T, U> {
+    case Response(() -> T)
+    case Error(() -> U)
 }
 
 
