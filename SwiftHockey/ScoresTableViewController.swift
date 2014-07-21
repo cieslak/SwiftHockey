@@ -16,7 +16,7 @@ class ScoresTableViewController: UITableViewController {
     var datePicker = UIDatePicker()
     var isShowingDatePicker = false
     var isRefreshing = false
-    var games = Game[]()
+    var games = [Game]()
     
     override func viewDidLoad()  {
         super.viewDidLoad()
@@ -55,7 +55,7 @@ class ScoresTableViewController: UITableViewController {
             }
         }
         
-        self.games = Game[]()
+        self.games = [Game]()
         self.tableView.reloadData()
         
         enableInterface(false)

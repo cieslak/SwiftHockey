@@ -26,10 +26,12 @@ class Team {
             cityName = "New York"
         }
         
-        if (shortName == "" && countElements(cityName) >= 3) {
-            shortName = cityName.substringToIndex(3).uppercaseString
-        }
-                
+//TODO: figure out why this broke in Beta 4
+        
+//        if (shortName == "" && countElements(cityName) >= 3) {
+//            shortName = cityName.substringToIndex(String.Index(3)).uppercaseString
+//        }
+        
         self.cityName = cityName
         self.teamName = teamName
         self.shortName = shortName

@@ -11,8 +11,8 @@ import UIKit
 let sharedScoreManager = ScoreManager()
 
 enum Result<T, U> {
-    case Response(() -> T)
-    case Error(() -> U)
+    case Response(@auto_closure () -> T)
+    case Error(@auto_closure() -> U)
 }
 
 
@@ -22,25 +22,25 @@ class ScoreManager: NSObject, NSURLSessionDelegate {
     
     let urlSession = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: nil, delegateQueue: nil)
     
-    var games = Game[]()
+    var games = [Game]()
     
-    func retrieveScoresForDateString(dateString: String, league: League, completion: (Result<Game[],NSError>) -> ()) {
+    func retrieveScoresForDateString(dateString: String, league: League, completion: (Result<[Game],NSError>) -> ()) {
 
-        let url = NSURL(string: "\(apiBaseURL)\(dateString)")
+        let url: NSURL? = NSURL(string: "\(apiBaseURL)\(dateString)")
         let request = NSMutableURLRequest(URL: url)
         let task = urlSession.downloadTaskWithRequest(request) {
             (url, response, error) in
             
             if let errorOccurred = error {
-                completion(Result.Error({errorOccurred}))
+                completion(Result.Error(errorOccurred))
                 return
             } else {
-                var gameArray = Game[]()
+                var gameArray = [Game]()
                 let data = NSData(contentsOfURL: url)
                 var jsonError: NSError? = nil
                 let jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options:nil, error: &jsonError)
                 if let errorOccurred = jsonError {
-                    completion(Result.Error({errorOccurred}))
+                    completion(Result.Error(errorOccurred))
                     return
                 }
                 if jsonObject is NSDictionary {
@@ -64,7 +64,7 @@ class ScoreManager: NSObject, NSURLSessionDelegate {
                         $0.league == league
                     }
                 }
-                completion(Result.Response({self.games}))
+                completion(Result.Response(self.games))
             }
         }
         task.resume()

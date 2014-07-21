@@ -10,15 +10,15 @@ import UIKit
 
 class GameTableViewCell: UITableViewCell {
     
-    @IBOutlet var homeShortNameLabel : UILabel
-    @IBOutlet var awayShortNameLabel : UILabel
-    @IBOutlet var homeScoreLabel : UILabel
-    @IBOutlet var awayScoreLabel : UILabel
-    @IBOutlet var homeTeamCityLabel : UILabel
-    @IBOutlet var homeTeamNameLabel : UILabel
-    @IBOutlet var awayTeamCityLabel : UILabel
-    @IBOutlet var awayTeamNameLabel : UILabel
-    @IBOutlet var periodLabel : UILabel
+    @IBOutlet var homeShortNameLabel : UILabel!
+    @IBOutlet var awayShortNameLabel : UILabel!
+    @IBOutlet var homeScoreLabel : UILabel!
+    @IBOutlet var awayScoreLabel : UILabel!
+    @IBOutlet var homeTeamCityLabel : UILabel!
+    @IBOutlet var homeTeamNameLabel : UILabel!
+    @IBOutlet var awayTeamCityLabel : UILabel!
+    @IBOutlet var awayTeamNameLabel : UILabel!
+    @IBOutlet var periodLabel : UILabel!
     
     var game: Game? = nil  {
     didSet {
