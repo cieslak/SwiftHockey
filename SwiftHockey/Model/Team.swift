@@ -28,9 +28,10 @@ class Team {
         
 //TODO: figure out why this broke in Beta 4
         
-//        if (shortName == "" && countElements(cityName) >= 3) {
-//            shortName = cityName.substringToIndex(3).uppercaseString
-//        }
+        if (shortName == "" && countElements(cityName) >= 3) {
+            let cityString = cityName as NSString
+            shortName = cityString.substringToIndex(3).uppercaseString
+        }
         
         self.cityName = cityName
         self.teamName = teamName
