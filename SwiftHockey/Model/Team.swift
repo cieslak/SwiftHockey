@@ -29,7 +29,7 @@ class Team {
 //TODO: figure out why this broke in Beta 4
         
 //        if (shortName == "" && countElements(cityName) >= 3) {
-//            shortName = cityName.substringToIndex(String.Index(3)).uppercaseString
+//            shortName = cityName.substringToIndex(3).uppercaseString
 //        }
         
         self.cityName = cityName
