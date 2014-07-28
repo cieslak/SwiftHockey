@@ -10,7 +10,7 @@ import UIKit
 
 let sharedScoreManager = ScoreManager()
 
-enum Result<T, U> {
+public enum Result<T, U> {
     case Response(@auto_closure () -> T)
     case Error(@auto_closure() -> U)
 }
@@ -18,15 +18,15 @@ enum Result<T, U> {
 
 class ScoreManager: NSObject, NSURLSessionDelegate {
     
-    let apiBaseURL = "https://api.hockeystreams.com/Scores?key=7344b5c9c89372d26b068022c9f28175&date="
+    private let apiBaseURL = "http://api.hockeystreams.com/Scores?key=7344b5c9c89372d26b068022c9f28175&date="
     
-    let urlSession = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: nil, delegateQueue: nil)
+    private let urlSession = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: nil, delegateQueue: nil)
     
-    var games = [Game]()
+    public var games = [Game]()
     
-    func retrieveScoresForDateString(dateString: String, league: League, completion: (Result<[Game],NSError>) -> ()) {
-
+    public func retrieveScoresForDateString(dateString: String, league: League, completion: (Result<[Game],NSError>) -> ()) {
         let url: NSURL? = NSURL(string: "\(apiBaseURL)\(dateString)")
+        
         let request = NSMutableURLRequest(URL: url)
         let task = urlSession.downloadTaskWithRequest(request) {
             (url, response, error) in

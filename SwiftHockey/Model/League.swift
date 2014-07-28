@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum League: String {
+public enum League: String {
     case NHL = "NHL"
     case AHL = "AHL"
     case OHL = "OHL"

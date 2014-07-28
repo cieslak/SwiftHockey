@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Game {
+public class Game {
 
     let league: League
     let awayTeam: Team

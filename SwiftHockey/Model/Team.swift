@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Team {
+public class Team {
     
     let cityName: String
     let teamName: String
@@ -26,11 +26,8 @@ class Team {
             cityName = "New York"
         }
         
-//TODO: figure out why this broke in Beta 4
-        
-        if (shortName == "" && countElements(cityName) >= 3) {
-            let cityString = cityName as NSString
-            shortName = cityString.substringToIndex(3).uppercaseString
+        if (countElements(shortName) == 0) {
+            shortName = cityName[cityName.startIndex..<advance(cityName.startIndex, 3, cityName.endIndex)]
         }
         
         self.cityName = cityName
