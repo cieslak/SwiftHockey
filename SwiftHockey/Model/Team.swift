@@ -26,7 +26,7 @@ public class Team {
             cityName = "New York"
         }
         
-        if (countElements(shortName) == 0) {
+        if (count(shortName) == 0) {
             shortName = cityName[cityName.startIndex..<advance(cityName.startIndex, 3, cityName.endIndex)]
         }
         

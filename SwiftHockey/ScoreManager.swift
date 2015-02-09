@@ -10,13 +10,13 @@ import UIKit
 
 let sharedScoreManager = ScoreManager()
 
-public enum Result<T, U> {
-    case Response(@auto_closure () -> T)
-    case Error(@auto_closure() -> U)
+public enum Result {
+    case Response([Game])
+    case Error(NSError)
 }
 
 
-class ScoreManager: NSObject, NSURLSessionDelegate {
+public class ScoreManager: NSObject, NSURLSessionDelegate {
     
     private let apiBaseURL = "http://api.hockeystreams.com/Scores?key=7344b5c9c89372d26b068022c9f28175&date="
     
@@ -24,10 +24,10 @@ class ScoreManager: NSObject, NSURLSessionDelegate {
     
     public var games = [Game]()
     
-    public func retrieveScoresForDateString(dateString: String, league: League, completion: (Result<[Game],NSError>) -> ()) {
+    public func retrieveScoresForDateString(dateString: String, league: League, completion: (Result) -> ()) {
         let url: NSURL? = NSURL(string: "\(apiBaseURL)\(dateString)")
         
-        let request = NSMutableURLRequest(URL: url)
+        let request = NSMutableURLRequest(URL: url!)
         let task = urlSession.downloadTaskWithRequest(request) {
             (url, response, error) in
             
@@ -36,19 +36,19 @@ class ScoreManager: NSObject, NSURLSessionDelegate {
                 return
             } else {
                 var gameArray = [Game]()
-                let data = NSData(contentsOfURL: url)
+                let gameData = NSData(contentsOfURL: url)
                 var jsonError: NSError? = nil
-                let jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options:nil, error: &jsonError)
-                if let errorOccurred = jsonError {
-                    completion(Result.Error(errorOccurred))
-                    return
-                }
-                if jsonObject is NSDictionary {
-                    let receivedGamesArray: NSArray? = jsonObject!["scores"] as? NSArray
-                    if let verifiedGamesArray = receivedGamesArray {
-                        for gameDict: AnyObject in verifiedGamesArray{
-                            if gameDict as? NSDictionary {
-                                if let game = Game.gameWithJSON(gameDict as NSDictionary) {
+                if let data = gameData {
+                    let jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options:nil, error: &jsonError)
+                    if let errorOccurred = jsonError {
+                        completion(Result.Error(errorOccurred))
+                        return
+                    }
+                    if jsonObject is NSDictionary {
+                        let receivedGamesArray: NSArray? = jsonObject!["scores"] as? NSArray
+                        if let verifiedGamesArray = receivedGamesArray {
+                            for gameDict: AnyObject in verifiedGamesArray{
+                                if let game = Game.gameWithJSON(gameDict as! NSDictionary) {
                                     gameArray.append(game)
                                 }
                             }

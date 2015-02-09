@@ -20,17 +20,33 @@ class ScoresTableViewController: UITableViewController {
     
     override func viewDidLoad()  {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem.title = leagueFilter.toRaw()
+        navigationItem.rightBarButtonItem?.title = leagueFilter.rawValue
         dateFormatter.dateFormat = "MM/dd/yyyy"
         datePicker.datePickerMode = .Date
         datePicker.maximumDate = NSDate()
         refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl?.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
     }
     
     override func viewDidAppear(animated: Bool)  {
         super.viewDidAppear(animated)
         refresh()
+    }
+    
+    func enableInterface(enable: Bool) {
+        navigationItem.leftBarButtonItem?.enabled = enable
+        navigationItem.rightBarButtonItem?.enabled = enable
+        refreshControl?.enabled = enable
+    }
+    
+    func showAlertWithTitle(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler:nil)
+        alertController.addAction(alertAction)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.presentViewController(alertController, animated: true, completion: nil)
+            self.enableInterface(true)
+        }
     }
     
     func refresh() {
@@ -39,28 +55,12 @@ class ScoresTableViewController: UITableViewController {
         
         isRefreshing = true
         
-        func enableInterface(enable: Bool) {
-            navigationItem.leftBarButtonItem.enabled = enable
-            navigationItem.rightBarButtonItem.enabled = enable
-            refreshControl.enabled = enable
-        }
-        
-        func showAlertWithTitle(title: String, #message: String) {
-            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-            let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler:nil)
-            alertController.addAction(alertAction)
-            dispatch_async(dispatch_get_main_queue()) {
-                self.presentViewController(alertController, animated: true, completion: nil)
-                enableInterface(true)
-            }
-        }
-        
         self.games = [Game]()
         self.tableView.reloadData()
         
         enableInterface(false)
         
-        refreshControl.beginRefreshing()
+        refreshControl?.beginRefreshing()
         
         let currentDateString = dateFormatter.stringFromDate(currentDate)
         
@@ -69,22 +69,22 @@ class ScoresTableViewController: UITableViewController {
             
             switch response {
             case .Error(let error):
-                showAlertWithTitle("Error Loading Scores", message: error().localizedDescription)
+                self.showAlertWithTitle("Error Loading Scores", message: error.localizedDescription)
                 self.isRefreshing = false
                 return
             case .Response(let games):
                 
-                self.games = games()
+                self.games = games
                 
                 dispatch_async(dispatch_get_main_queue()) {
                     self.tableView.reloadData()
-                    enableInterface(true)
-                    self.refreshControl.endRefreshing()
+                    self.enableInterface(true)
+                    self.refreshControl?.endRefreshing()
                 }
                 
                 if self.games.count == 0 {
                     var dateString = self.dateFormatter.stringFromDate(self.currentDate)
-                    showAlertWithTitle("No Games Scheduled", message: "No hockey for \(dateString). 😭")
+                    self.showAlertWithTitle("No Games Scheduled", message: "No hockey for \(dateString). 😭")
                 }
                 self.isRefreshing = false
             }
@@ -110,7 +110,7 @@ class ScoresTableViewController: UITableViewController {
             if NSDate().dateByRemovingTime() == currentDate {
                 dateString = "Today"
             }
-            navigationItem.leftBarButtonItem.title = dateString
+            navigationItem.leftBarButtonItem?.title = dateString
             
         } else {
             
@@ -121,7 +121,7 @@ class ScoresTableViewController: UITableViewController {
                 self.tableView.tableHeaderView = self.datePicker
             }
             
-            navigationItem.leftBarButtonItem.title = "Done"
+            navigationItem.leftBarButtonItem?.title = "Done"
             
         }
         
@@ -134,33 +134,28 @@ class ScoresTableViewController: UITableViewController {
         for string in ["All", "NHL", "AHL", "OHL", "WHL", "QMJHL"] {
             let action = UIAlertAction(title: string, style: UIAlertActionStyle.Default) {
                 action in
-                self.leagueFilter = League.fromRaw(action.title)!
-                self.navigationItem.rightBarButtonItem.title = string 
+                self.leagueFilter = League(rawValue: action.title)!
+                self.navigationItem.rightBarButtonItem?.title = string
                 self.refresh()
             }
             alertController.addAction(action)
         }
         self.presentViewController(alertController, animated: true, completion: nil)
     }
-    
-}
 
-extension ScoresTableViewController: UITableViewDataSource {
-    
-    override func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return games.count
     }
     
-    override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let cell: GameTableViewCell = tableView.dequeueReusableCellWithIdentifier("scoreCell") as GameTableViewCell
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell: GameTableViewCell = tableView.dequeueReusableCellWithIdentifier("scoreCell") as! GameTableViewCell
         cell.game = games[indexPath.row]
         return cell
     }
-    
 }
 
 extension NSDate {
@@ -168,7 +163,7 @@ extension NSDate {
         let flags: NSCalendarUnit = .DayCalendarUnit | .MonthCalendarUnit | .YearCalendarUnit
         let calendar = NSCalendar.currentCalendar()
         let components = calendar.components(flags, fromDate: self)
-        return calendar.dateFromComponents(components)
+        return calendar.dateFromComponents(components)!
     }
 }
 

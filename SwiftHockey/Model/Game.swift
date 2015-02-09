@@ -31,7 +31,7 @@ public class Game {
         if leagueString == nil {
             return nil
         }
-        let league = League.fromRaw(leagueString!)
+        let league = League(rawValue: leagueString!)
         
         let awayTeamCity: String? = jsonDict["awayTeamCity"] as? String
         let awayTeamName: String? = jsonDict["awayTeamName"] as? String
