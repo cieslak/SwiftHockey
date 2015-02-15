@@ -22,7 +22,11 @@ public class ScoreManager: NSObject {
     
     private let urlSession = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: nil, delegateQueue: nil)
     
-    public var games = [Game]()
+    private var gameArray: [Game]?
+
+    public var games: [Game] {
+        return gameArray ?? [Game]()
+    }
     
     public func retrieveScoresForDateString(dateString: String, league: League, completion: (Result) -> ()) {
         let url: NSURL? = NSURL(string: "\(apiBaseURL)\(dateString)")
@@ -33,41 +37,35 @@ public class ScoreManager: NSObject {
             
             if let errorOccurred = error {
                 completion(Result.Error(errorOccurred))
-                return
             } else {
-                var gameArray = [Game]()
-                let gameData = NSData(contentsOfURL: url)
+                var newGameArray = [Game]()
                 var jsonError: NSError? = nil
-                if let data = gameData {
-                    let jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options:nil, error: &jsonError)
-                    if let errorOccurred = jsonError {
-                        completion(Result.Error(errorOccurred))
-                        return
-                    }
-                    if jsonObject is NSDictionary {
-                        let receivedGamesArray: NSArray? = jsonObject!["scores"] as? NSArray
-                        if let verifiedGamesArray = receivedGamesArray {
-                            for gameDict: AnyObject in verifiedGamesArray{
-                                if let game = Game.gameWithJSON(gameDict as! NSDictionary) {
-                                    gameArray.append(game)
-                                }
+                if let data = NSData(contentsOfURL: url),
+                    let parsedData: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options:nil, error: &jsonError),
+                    jsonDict = parsedData as? NSDictionary,
+                    scores = jsonDict["scores"] as? NSArray {
+                        for gameData: AnyObject in scores {
+                            if let gameDict = gameData as? NSDictionary,
+                                let game = Game.gameWithJSON(gameDict) {
+                                    newGameArray.append(game)
                             }
                         }
-                    }
                 }
-                
-                switch league {
-                case .All:
-                    self.games = gameArray
-                default:
-                    self.games = gameArray.filter {
-                        $0.league == league
+                if let errorOccurred = jsonError {
+                    completion(Result.Error(errorOccurred))
+                } else {
+                    switch league {
+                    case .All:
+                        self.gameArray = newGameArray
+                    default:
+                        self.gameArray = newGameArray.filter {
+                            $0.league == league
+                        }
                     }
+                    completion(Result.Response(self.games))
                 }
-                completion(Result.Response(self.games))
             }
         }
         task.resume()
     }
-    
 }
