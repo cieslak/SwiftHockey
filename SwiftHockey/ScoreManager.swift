@@ -16,7 +16,7 @@ public enum Result {
 }
 
 
-public class ScoreManager: NSObject, NSURLSessionDelegate {
+public class ScoreManager: NSObject {
     
     private let apiBaseURL = "http://api.hockeystreams.com/Scores?key=7344b5c9c89372d26b068022c9f28175&date="
     
