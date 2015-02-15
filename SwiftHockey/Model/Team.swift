@@ -32,7 +32,7 @@ public class Team {
         
         self.cityName = cityName
         self.teamName = teamName
-        self.shortName = shortName
+        self.shortName = shortName.uppercaseString
     }
     
 }

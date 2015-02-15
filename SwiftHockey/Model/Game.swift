@@ -29,22 +29,22 @@ public class Game {
         
         if let
             leagueString = jsonDict["event"] as? String, league = League(rawValue: leagueString),
-            awayTeamCity: String? = jsonDict["awayTeamCity"] as? String,
-            awayTeamName: String? = jsonDict["awayTeamName"] as? String,
-            shortAwayTeam: String? = jsonDict["shortAwayTeam"] as? String,
-            homeTeamCity: String? = jsonDict["homeTeamCity"] as? String,
-            homeTeamName: String? = jsonDict["homeTeamName"] as? String,
-            shortHomeTeam: String? = jsonDict["shortHomeTeam"] as? String
+            awayTeamCity = jsonDict["awayTeamCity"] as? String,
+            awayTeamName = jsonDict["awayTeamName"] as? String,
+            awayTeamShortName = jsonDict["shortAwayTeam"] as? String,
+            homeTeamCity = jsonDict["homeTeamCity"] as? String,
+            homeTeamName = jsonDict["homeTeamName"] as? String,
+            homeTeamShortName = jsonDict["shortHomeTeam"] as? String
         {
-            let homeTeam = Team(cityName: homeTeamCity!, teamName: homeTeamName!, shortName: shortHomeTeam!.uppercaseString)
-            let awayTeam = Team(cityName: awayTeamCity!, teamName: awayTeamName!, shortName: shortAwayTeam!.uppercaseString)
+            let homeTeam = Team(cityName: homeTeamCity, teamName: homeTeamName, shortName: homeTeamShortName)
+            let awayTeam = Team(cityName: awayTeamCity, teamName: awayTeamName, shortName: awayTeamShortName)
             let game = Game(league: league, awayTeam: awayTeam, homeTeam: homeTeam)
             
-            if let isPlaying: Int? = jsonDict["isPlaying"] as? Int {
+            if let isPlaying = jsonDict["isPlaying"] as? Int {
                 game.playing = (isPlaying > 0) ? true : false
             }
             
-            if let period: String? = jsonDict["period"] as? String {
+            if let period = jsonDict["period"] as? String {
                 game.period = period
             }
             
