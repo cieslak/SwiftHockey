@@ -20,11 +20,7 @@ public class ScoreManager: NSObject {
     
     private let urlSession = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: nil, delegateQueue: nil)
     
-    private var gameArray: [Game]?
-
-    public var games: [Game] {
-        return gameArray ?? [Game]()
-    }
+    private(set) var games: [Game] = []
     
     public func retrieveScoresForDateString(dateString: String, league: League, completion: (Result) -> ()) {
         let url: NSURL? = NSURL(string: "\(apiBaseURL)\(dateString)")
@@ -54,9 +50,9 @@ public class ScoreManager: NSObject {
                 } else {
                     switch league {
                     case .All:
-                        self.gameArray = newGameArray
+                        self.games = newGameArray
                     default:
-                        self.gameArray = newGameArray.filter {
+                        self.games = newGameArray.filter {
                             $0.league == league
                         }
                     }

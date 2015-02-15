@@ -51,37 +51,30 @@ class ScoresTableViewController: UITableViewController {
     
     func refresh(date: NSDate) {
         
-        if isRefreshing {return}
-        
-        isRefreshing = true
-        
-        self.tableView.reloadData()
-        
-        enableInterface(false)
-        
-        refreshControl?.beginRefreshing()
-        
-        let currentDateString = dateFormatter.stringFromDate(date)
-        
-        scoreManager.retrieveScoresForDateString(currentDateString, league:leagueFilter) {
-            response in
+        if !isRefreshing {
             
-            switch response {
-            case .Error(let error):
-                self.showAlertWithTitle("Error Loading Scores", message: error.localizedDescription)
-                self.isRefreshing = false
-                return
-            case .Response(let games):
+            isRefreshing = true
+            enableInterface(false)
+            refreshControl?.beginRefreshing()
+            
+            let currentDateString = dateFormatter.stringFromDate(date)
+            
+            scoreManager.retrieveScoresForDateString(currentDateString, league:leagueFilter) {
+                response in
                 
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.tableView.reloadData()
-                    self.enableInterface(true)
-                    self.refreshControl?.endRefreshing()
-                }
-                
-                if games.count == 0 {
-                    var dateString = self.dateFormatter.stringFromDate(self.currentDate)
-                    self.showAlertWithTitle("No Games Scheduled", message: "No hockey for \(dateString). 😭")
+                switch response {
+                case .Error(let error):
+                    self.showAlertWithTitle("Error Loading Scores", message: error.localizedDescription)
+                case .Response(let games):
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.tableView.reloadData()
+                        self.enableInterface(true)
+                        self.refreshControl?.endRefreshing()
+                    }
+                    if games.count == 0 {
+                        var dateString = self.dateFormatter.stringFromDate(self.currentDate)
+                        self.showAlertWithTitle("No Games Scheduled", message: "No hockey for \(dateString). 😭")
+                    }
                 }
                 self.isRefreshing = false
             }
@@ -96,12 +89,12 @@ class ScoresTableViewController: UITableViewController {
                 }, completion: {
                     finished in
                     self.tableView.tableHeaderView = nil
-                })
+            })
             
             let newDate = datePicker.date.dateByRemovingTime()
             if newDate != currentDate {refresh(newDate)}
             currentDate = newDate
-
+            
             let dateString: String
             if NSDate().dateByRemovingTime() == currentDate {
                 dateString = "Today"
@@ -128,7 +121,7 @@ class ScoresTableViewController: UITableViewController {
     }
     
     @IBAction func filterButtonPressed(sender : AnyObject) {
-        let alertController = UIAlertController(title: nil, message: "Select a league to view", preferredStyle: UIAlertControllerStyle.ActionSheet);
+        let alertController = UIAlertController(title: "Select a league to view", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet);
         
         for string in ["All", "NHL", "AHL", "OHL", "WHL", "QMJHL"] {
             let action = UIAlertAction(title: string, style: UIAlertActionStyle.Default) {
@@ -141,7 +134,7 @@ class ScoresTableViewController: UITableViewController {
         }
         self.presentViewController(alertController, animated: true, completion: nil)
     }
-
+    
 }
 
 extension ScoresTableViewController: UITableViewDataSource {
