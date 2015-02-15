@@ -143,6 +143,18 @@ class ScoresTableViewController: UITableViewController {
         self.presentViewController(alertController, animated: true, completion: nil)
     }
 
+}
+
+extension NSDate {
+    func dateByRemovingTime() -> NSDate {
+        let flags: NSCalendarUnit = .DayCalendarUnit | .MonthCalendarUnit | .YearCalendarUnit
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components(flags, fromDate: self)
+        return calendar.dateFromComponents(components)!
+    }
+}
+
+extension ScoresTableViewController: UITableViewDataSource {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -155,15 +167,6 @@ class ScoresTableViewController: UITableViewController {
         let cell: GameTableViewCell = tableView.dequeueReusableCellWithIdentifier("scoreCell") as! GameTableViewCell
         cell.game = games[indexPath.row]
         return cell
-    }
-}
-
-extension NSDate {
-    func dateByRemovingTime() -> NSDate {
-        let flags: NSCalendarUnit = .DayCalendarUnit | .MonthCalendarUnit | .YearCalendarUnit
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components(flags, fromDate: self)
-        return calendar.dateFromComponents(components)!
     }
 }
 
