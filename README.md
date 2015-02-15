@@ -8,12 +8,11 @@ An iOS app written in Swift that check hockey scores. Inspired by [Jason Leyrer�
 
 ##Notes
 
+###Feb. 15, 2015
+
+The code has now been modified to use 1.2 goodness like chained optionals.
+
 ###Feb. 9, 2015 Update
 
 This now builds under Swift 1.2, but I haven't looked at the code for correctness with all the changes to optional semantics.
 
------
-
-###Original
-
-It’s pretty rudimentary and ugly, but I just wanted to see how quickly I could get a functioning Swift app out. Also, it’s probably not very good Swift.
