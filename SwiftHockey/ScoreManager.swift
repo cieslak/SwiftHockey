@@ -8,8 +8,6 @@
 
 import UIKit
 
-let sharedScoreManager = ScoreManager()
-
 public enum Result {
     case Response([Game])
     case Error(NSError)

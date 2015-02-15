@@ -11,12 +11,12 @@ import UIKit
 class ScoresTableViewController: UITableViewController {
     
     let dateFormatter = NSDateFormatter()
+    let scoreManager = ScoreManager()
     var leagueFilter = League.NHL
     var currentDate = NSDate().dateByRemovingTime()
     var datePicker = UIDatePicker()
     var isShowingDatePicker = false
     var isRefreshing = false
-    var games = [Game]()
     
     override func viewDidLoad()  {
         super.viewDidLoad()
@@ -55,7 +55,6 @@ class ScoresTableViewController: UITableViewController {
         
         isRefreshing = true
         
-        self.games = [Game]()
         self.tableView.reloadData()
         
         enableInterface(false)
@@ -64,7 +63,7 @@ class ScoresTableViewController: UITableViewController {
         
         let currentDateString = dateFormatter.stringFromDate(currentDate)
         
-        sharedScoreManager.retrieveScoresForDateString(currentDateString, league:leagueFilter) {
+        scoreManager.retrieveScoresForDateString(currentDateString, league:leagueFilter) {
             response in
             
             switch response {
@@ -74,15 +73,13 @@ class ScoresTableViewController: UITableViewController {
                 return
             case .Response(let games):
                 
-                self.games = games
-                
                 dispatch_async(dispatch_get_main_queue()) {
                     self.tableView.reloadData()
                     self.enableInterface(true)
                     self.refreshControl?.endRefreshing()
                 }
                 
-                if self.games.count == 0 {
+                if games.count == 0 {
                     var dateString = self.dateFormatter.stringFromDate(self.currentDate)
                     self.showAlertWithTitle("No Games Scheduled", message: "No hockey for \(dateString). 😭")
                 }
@@ -160,12 +157,12 @@ extension ScoresTableViewController: UITableViewDataSource {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return games.count
+        return scoreManager.games.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: GameTableViewCell = tableView.dequeueReusableCellWithIdentifier("scoreCell") as! GameTableViewCell
-        cell.game = games[indexPath.row]
+        cell.game = scoreManager.games[indexPath.row]
         return cell
     }
 }
