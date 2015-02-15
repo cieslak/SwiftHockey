@@ -30,7 +30,7 @@ class ScoresTableViewController: UITableViewController {
     
     override func viewDidAppear(animated: Bool)  {
         super.viewDidAppear(animated)
-        refresh()
+        refresh(currentDate)
     }
     
     func enableInterface(enable: Bool) {
@@ -49,7 +49,7 @@ class ScoresTableViewController: UITableViewController {
         }
     }
     
-    func refresh() {
+    func refresh(date: NSDate) {
         
         if isRefreshing {return}
         
@@ -61,7 +61,7 @@ class ScoresTableViewController: UITableViewController {
         
         refreshControl?.beginRefreshing()
         
-        let currentDateString = dateFormatter.stringFromDate(currentDate)
+        let currentDateString = dateFormatter.stringFromDate(date)
         
         scoreManager.retrieveScoresForDateString(currentDateString, league:leagueFilter) {
             response in
@@ -99,14 +99,16 @@ class ScoresTableViewController: UITableViewController {
                 })
             
             let newDate = datePicker.date.dateByRemovingTime()
-            let isSameDate = newDate == currentDate
+            if newDate != currentDate {refresh(newDate)}
             currentDate = newDate
-            if !isSameDate {refresh()}
-            
-            var dateString = dateFormatter.stringFromDate(newDate)
+
+            let dateString: String
             if NSDate().dateByRemovingTime() == currentDate {
                 dateString = "Today"
+            } else {
+                dateString = dateFormatter.stringFromDate(newDate)
             }
+            
             navigationItem.leftBarButtonItem?.title = dateString
             
         } else {
@@ -130,25 +132,16 @@ class ScoresTableViewController: UITableViewController {
         
         for string in ["All", "NHL", "AHL", "OHL", "WHL", "QMJHL"] {
             let action = UIAlertAction(title: string, style: UIAlertActionStyle.Default) {
-                action in
+                [unowned self] (action) in
                 self.leagueFilter = League(rawValue: action.title)!
                 self.navigationItem.rightBarButtonItem?.title = string
-                self.refresh()
+                self.refresh(self.currentDate)
             }
             alertController.addAction(action)
         }
         self.presentViewController(alertController, animated: true, completion: nil)
     }
 
-}
-
-extension NSDate {
-    func dateByRemovingTime() -> NSDate {
-        let flags: NSCalendarUnit = .DayCalendarUnit | .MonthCalendarUnit | .YearCalendarUnit
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components(flags, fromDate: self)
-        return calendar.dateFromComponents(components)!
-    }
 }
 
 extension ScoresTableViewController: UITableViewDataSource {
@@ -167,6 +160,14 @@ extension ScoresTableViewController: UITableViewDataSource {
     }
 }
 
+extension NSDate {
+    func dateByRemovingTime() -> NSDate {
+        let flags: NSCalendarUnit = .DayCalendarUnit | .MonthCalendarUnit | .YearCalendarUnit
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components(flags, fromDate: self)
+        return calendar.dateFromComponents(components)!
+    }
+}
 
 
 
