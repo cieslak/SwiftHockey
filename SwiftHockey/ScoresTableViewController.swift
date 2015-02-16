@@ -25,12 +25,12 @@ class ScoresTableViewController: UITableViewController {
         datePicker.datePickerMode = .Date
         datePicker.maximumDate = NSDate()
         refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl?.addTarget(self, action:Selector("refreshControlPulled:"), forControlEvents: UIControlEvents.ValueChanged)
     }
     
     override func viewDidAppear(animated: Bool)  {
         super.viewDidAppear(animated)
-        refresh(currentDate)
+        refreshScores(currentDate)
     }
     
     func enableInterface(enable: Bool) {
@@ -49,14 +49,20 @@ class ScoresTableViewController: UITableViewController {
         }
     }
     
-    func refresh(date: NSDate) {
+    func refreshControlPulled(sender: AnyObject) {
+        self.refreshScores(currentDate)
+    }
+    
+    func refreshScores(date: NSDate) {
         
         if !isRefreshing {
             
             isRefreshing = true
             enableInterface(false)
-            refreshControl?.beginRefreshing()
-            
+            if let refresh = refreshControl where !refresh.refreshing {
+               refresh.beginRefreshing()
+            }
+    
             let currentDateString = dateFormatter.stringFromDate(date)
             
             scoreManager.retrieveScoresForDateString(currentDateString, league:leagueFilter) {
@@ -77,6 +83,7 @@ class ScoresTableViewController: UITableViewController {
                     }
                 }
                 self.isRefreshing = false
+                self.refreshControl?.endRefreshing()
             }
         }
     }
@@ -92,7 +99,7 @@ class ScoresTableViewController: UITableViewController {
             })
             
             let newDate = datePicker.date.dateByRemovingTime()
-            if newDate != currentDate {refresh(newDate)}
+            if newDate != currentDate {refreshScores(newDate)}
             currentDate = newDate
             
             let dateString: String
@@ -128,7 +135,7 @@ class ScoresTableViewController: UITableViewController {
                 [unowned self] (action) in
                 self.leagueFilter = League(rawValue: action.title)!
                 self.navigationItem.rightBarButtonItem?.title = string
-                self.refresh(self.currentDate)
+                self.refreshScores(self.currentDate)
             }
             alertController.addAction(action)
         }
